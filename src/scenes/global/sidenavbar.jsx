@@ -127,7 +127,7 @@ const SideNavbar = () => {
             
             <Item
               title="Customers Information"
-              to="/cusomers"
+              to="/customers"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
