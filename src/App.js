@@ -1,12 +1,8 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
-import Topbar from "./scenes/global/topbar";
-import SideNavbar from "./scenes/global/sidenavbar";
-import Contacts from "./scenes/contacts";
-import Discounts from "./scenes/discounts";
-import Products from "./scenes/products";
-import Invoices from "./scenes/invoices";
+import HomePage from "./scenes/homepage";
+import MainContent from "./scenes/mainContent";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -15,27 +11,13 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div style={{ display: "flex", height: "100vh" }}>
-          {/* Sidebar */}
-          <SideNavbar />
+        <Routes>
+          {/* Ana giriş sayfası */}
+          <Route path="/" element={<HomePage />} />
 
-          {/* Main Content */}
-          <div
-            style={{
-              flexGrow: 1, // Kalan alanı kaplar
-              overflow: "auto", // İçerik taşarsa scroll yapılabilir
-            }}
-          >
-            <Topbar />
-            <Routes>
-              <Route path="/customers" element={<Contacts />} />
-              <Route path="/discounts" element={<Discounts />} />
-              <Route path = "prices" element={<Products/>}/>
-              <Route path = "/invoices" element= {<Invoices/>}/>
-              {/* Diğer route'lar buraya eklenebilir */}
-            </Routes>
-          </div>
-        </div>
+          {/* MainContent için parent route */}
+          <Route path="/app/*" element={<MainContent />} />
+        </Routes>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
