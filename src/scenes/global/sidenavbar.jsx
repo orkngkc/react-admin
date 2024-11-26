@@ -111,7 +111,7 @@ const SideNavbar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/app"
+              to="/dashboards/smapp/"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -127,14 +127,14 @@ const SideNavbar = () => {
             
             <Item
               title="Customers Information"
-              to="/app/customers"
+              to="/dashboards/smapp/customers"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Invoices Balances"
-              to="/app/invoices"
+              to="/dashboards/smapp/invoices"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -149,7 +149,7 @@ const SideNavbar = () => {
             </Typography>
             <Item
               title="Prices Form"
-              to="/app/prices"
+              to="/dashboards/smapp/prices"
               icon={<AttachMoneyOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -157,7 +157,7 @@ const SideNavbar = () => {
 
             <Item
               title="Discounts"
-              to="/app/discounts"
+              to="/dashboards/smapp/discounts"
               icon={<PercentOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -174,28 +174,28 @@ const SideNavbar = () => {
             </Typography>
             <Item
               title="Bar Chart"
-              to="/app/bar"
+              to="/dashboards/smapp/bar"
               icon={<BarChartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Pie Chart"
-              to="/app/pie"
+              to="/dashboards/smapp/pie"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Line Chart"
-              to="/app/line"
+              to="/dashboards/smapp/line"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Geography Chart"
-              to="/app/geography"
+              to="/dashboards/smapp/geography"
               icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

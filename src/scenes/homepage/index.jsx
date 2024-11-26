@@ -20,7 +20,7 @@ function HomePage() {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => navigate("/app")}
+        onClick={() => navigate("/dashboards/smapp")}
       >
         Go to Main App
       </Button>

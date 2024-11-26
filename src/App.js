@@ -13,10 +13,10 @@ function App() {
         <CssBaseline />
         <Routes>
           {/* Ana giriş sayfası */}
-          <Route path="/" element={<HomePage />} />
+          <Route path="/dashboards/*" element={<HomePage />} />
 
           {/* MainContent için parent route */}
-          <Route path="/app/*" element={<MainContent />} />
+          <Route path="dashboards/smapp/*" element={<MainContent />} />
         </Routes>
       </ThemeProvider>
     </ColorModeContext.Provider>
