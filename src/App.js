@@ -6,6 +6,7 @@ import SideNavbar from "./scenes/global/sidenavbar";
 import Contacts from "./scenes/contacts";
 import Discounts from "./scenes/discounts";
 import Products from "./scenes/products";
+import Invoices from "./scenes/invoices";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -30,6 +31,7 @@ function App() {
               <Route path="/customers" element={<Contacts />} />
               <Route path="/discounts" element={<Discounts />} />
               <Route path = "prices" element={<Products/>}/>
+              <Route path = "/invoices" element= {<Invoices/>}/>
               {/* Diğer route'lar buraya eklenebilir */}
             </Routes>
           </div>

@@ -70,3 +70,12 @@ export const setProductPriceAPI = async (productId, newPrice) => {
   }
 };
 
+export const fetchOrders = async () => {
+  const response = await axios.get(`http://localhost:8003/SalesManager/orders`);
+  return response.data;
+};
+
+export const fetchOrderItems = async () => {
+  const response = await axios.get(`http://localhost:8003/SalesManager/orderItems`);
+  return response.data;
+};
