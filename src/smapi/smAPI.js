@@ -119,17 +119,17 @@ export const fetchRefundsWithProductNames = async () => {
     const refundsWithProductNames = refundsData.map((refund) => {
       // Refund'un order_item_id'sini sakla
       const orderItemId = refund.order_item_id;
-      console.log(orderItemId);
+      
 
       // order_items tablosunda order_item_id'yi bul ve product_id'yi al
       const orderItem = orderItemsData.find((item) => item.order_item_id === orderItemId);
       const productId = orderItem?.product_id; // product_id bulunamazsa undefined olur
-      console.log(productId);
+     
 
       // products tablosunda product_id'yi bul ve product_name'i al
       const product = productsData.find((product) => product.product_id === productId);
       const productName = product?.name || "Unknown Product"; // Ürün bulunamazsa varsayılan isim
-      console.log(productName);
+      
 
       // Sonuçları geri döndürmek için refund objesini genişlet ve product_name ekle
       return {
@@ -142,5 +142,129 @@ export const fetchRefundsWithProductNames = async () => {
   } catch (error) {
     console.error("Refunds with Product Names could not be fetched:", error);
     throw error; // Hata durumunda fırlat
+  }
+};
+
+export const fetchProfitLossData = async () => {
+  try {
+    // Order Items ve Products verilerini çek
+    const [orderItemsData, productsData] = await Promise.all([
+      fetchOrderItems(),
+      fetchProducts(),
+    ]);
+    console.log(productsData)
+
+    // Ürün başına toplam satış miktarı ve toplam satış değerini hesaplamak için bir nesne oluştur
+    const profitLossMap = {};
+
+    // Order items üzerinden dönerek her ürün için satış verilerini topla
+    orderItemsData.forEach((orderItem) => {
+      const { product_id, price_at_purchase, quantity } = orderItem;
+
+      if (!profitLossMap[product_id]) {
+        profitLossMap[product_id] = {
+          product_id,
+          total_sales: 0,
+          total_quantity: 0,
+          cost: 0,
+          product_name: "Unknown Product",
+        };
+      }
+
+      // Mevcut ürünün satış miktarını ve satış gelirini ekle
+      profitLossMap[product_id].total_sales += price_at_purchase * quantity;
+      profitLossMap[product_id].total_quantity += quantity;
+    });
+
+    // Products üzerinden geçerek ürün maliyeti ve ismini ekle
+    productsData.forEach((product) => {
+      const { product_id, cost, name } = product;
+
+      if (profitLossMap[product_id]) {
+        profitLossMap[product_id].cost = cost || 0; // Eğer `cost` eksikse `0` koy
+        profitLossMap[product_id].product_name = name || "Unknown Product"; // Eğer `name` eksikse "Unknown Product"
+      }
+    });
+
+    // Sonuçları bir array formatında döndür
+    return Object.values(profitLossMap).map((item) => {
+      const total_cost = item.cost * item.total_quantity; // Toplam maliyeti hesapla
+      const profit_loss = item.total_sales - total_cost; // Kar/zarar hesapla
+
+      return {
+        ...item,
+        total_cost,
+        profit_loss,
+      };
+    });
+  } catch (error) {
+    console.error("Profit/Loss data could not be fetched:", error);
+    throw error;
+  }
+};
+
+
+
+export const fetchTotalRevenueAndCost = async () => {
+  try {
+    // Profit/Loss verilerini al
+    const profitLossData = await fetchProfitLossData();
+    console.log("ProfitLossData:", profitLossData);
+
+    // Toplam Revenue ve Cost'u güvenli şekilde hesapla
+    const totalRevenue = profitLossData.reduce(
+      (sum, item) => sum + parseFloat(item.total_sales || 0),
+      0
+    );
+    const totalCost = profitLossData.reduce(
+      (sum, item) => sum + parseFloat(item.total_cost || 0),
+      0
+    );
+
+    return {
+      totalRevenue,
+      totalCost,
+    };
+  } catch (error) {
+    console.error("Total Revenue and Cost data could not be fetched:", error);
+    throw error;
+  }
+};
+
+export const fetchProductRevenueAndCost = async () => {
+  try {
+    const [orderItems, products] = await Promise.all([
+      fetchOrderItems(),
+      fetchProducts(),
+    ]);
+
+    const revenueCostData = products.map((product) => {
+      // Her ürün için siparişleri filtrele
+      const productOrders = orderItems.filter(
+        (item) => item.product_id === product.product_id
+      );
+
+      // Toplam gelir ve maliyet hesapla
+      const totalRevenue = productOrders.reduce(
+        (acc, item) => acc + item.price_at_purchase * item.quantity,
+        0
+      );
+      const totalCost = productOrders.reduce(
+        (acc, item) => acc + product.cost * item.quantity,
+        0
+      );
+
+      // Ürün adıyla birlikte revenue ve cost döndür
+      return {
+        product_name: product.name,
+        revenue: totalRevenue,
+        cost: totalCost,
+      };
+    });
+
+    return revenueCostData;
+  } catch (error) {
+    console.error("Error fetching product revenue and cost data:", error);
+    throw error;
   }
 };

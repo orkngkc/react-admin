@@ -7,6 +7,8 @@ import Discounts from "../discounts";
 import Products from "../products";
 import Invoices from "../invoices";
 import Refunds from "../refunds";
+import ProfitLossPage from "../profitLoss";
+import RevenueCostPage from "../revenueCost";
 
 function MainContent() {
   return (
@@ -29,6 +31,8 @@ function MainContent() {
           <Route path="prices" element={<Products />} />
           <Route path="invoices" element={<Invoices />} />
           <Route path="refunds" element={<Refunds />} />
+          <Route path = "profitLoss" element = {<ProfitLossPage/>}/>
+          <Route path = "revenueCost" element = {<RevenueCostPage/>}/>
         </Routes>
       </div>
     </div>

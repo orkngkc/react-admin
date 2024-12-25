@@ -182,15 +182,15 @@ const SideNavbar = () => {
               Charts
             </Typography>
             <Item
-              title="Bar Chart"
-              to="/dashboards/smapp/bar"
+              title="Revenue/Cost"
+              to="/dashboards/smapp/revenueCost"
               icon={<BarChartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Pie Chart"
-              to="/dashboards/smapp/pie"
+              title="Total Profit Loss"
+              to="/dashboards/smapp/profitLoss"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
