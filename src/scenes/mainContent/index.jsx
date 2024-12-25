@@ -9,6 +9,7 @@ import Invoices from "../invoices";
 import Refunds from "../refunds";
 import ProfitLossPage from "../profitLoss";
 import RevenueCostPage from "../revenueCost";
+import Dashboard from "../dashboard";
 
 function MainContent() {
   return (
@@ -26,6 +27,7 @@ function MainContent() {
         <CssBaseline />
         <Topbar />
         <Routes>
+          <Route path="" element={<Dashboard />} />
           <Route path="customers" element={<Contacts />} />
           <Route path="discounts" element={<Discounts />} />
           <Route path="prices" element={<Products />} />
